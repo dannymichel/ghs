@@ -84,6 +84,49 @@ ghs
 
 Choose the `default` command from the list and select the GPG and SSH keys.
 
+## Future Plans
+
+### 1. Storing Pairings in Memory and Config File
+
+Currently, `ghs` allows you to pair GPG and SSH keys for use with GitHub repositories. In future updates, we plan to:
+
+- **Store pairings in memory**: Temporarily save key pairings for the duration of a session, allowing for quick access and reuse without the need to re-enter key details.
+- **Persist pairings in a config file**: Save key pairings in a configuration file, enabling persistent storage across sessions. This will allow `ghs` to automatically load your preferred key pairings when you start the tool.
+
+### 2. Subcommands
+
+Instead of running the main `ghs` command and then choosing the operation from a list, you'll be able to execute specific subcommands directly from the command line. Planned subcommands include:
+
+- **Analyze GPG keys**: 
+    ```bash
+    ghs analyze
+    ```
+    Directly export and analyze your GPG keys.
+
+- **Pair GPG and SSH keys**: 
+    ```bash
+    ghs pair
+    ```
+    Quickly pair your GPG and SSH keys.
+
+- **Clone repository**: 
+    ```bash
+    ghs clone <repository_url> --gpg <gpg_key_id> --ssh <ssh_key_path>
+    ```
+    Clone a GitHub repository using specified GPG and SSH keys.
+
+- **Switch GitHub accounts**: 
+    ```bash
+    ghs switch <repository_path> --gpg <gpg_key_id> --ssh <ssh_key_path>
+    ```
+    Switch the GitHub account in a repository.
+
+- **Set default keys**: 
+    ```bash
+    ghs default --gpg <gpg_key_id> --ssh <ssh_key_path>
+    ```
+    Set default GPG and SSH keys for your operations.
+
 ## Directory Structure
 
 ```
