@@ -1,0 +1,17 @@
+{
+  "name": "ghs",
+  "version": "1.0.0",
+  "main": "bin/ghs.js",
+  "bin": {
+    "ghs": "./bin/ghs.js"
+  },
+  "dependencies": {
+    "child_process": "^1.0.2",
+    "fs": "^0.0.1-security",
+    "inquirer": "^8.2.0",
+    "openpgp": "^5.0.0",
+    "os": "^0.1.1",
+    "path": "^0.12.7",
+    "simple-git": "^2.47.0"
+  }
+}
