@@ -1,13 +1,13 @@
 # ghs - GitHub SSH and GPG Key Manager
 
-`ghs` is a command-line tool to manage SSH and GPG keys for GitHub accounts. It allows you to analyze, pair, and set default keys for your repositories.
+`ghs` is a command-line tool to manage SSH and GPG keys for GitHub accounts. It allows you to analyze, save configurations, and switch between them easily.
 
 ## Features
 
 - Export and analyze GPG keys
-- Pair GPG and SSH keys
+- Save and name GPG and SSH key configurations
 - Clone repositories with specified SSH and GPG keys
-- Switch GitHub accounts in a repository
+- Switch GitHub accounts using saved configurations
 - Set default GPG and SSH keys
 - Dry-run mode for simulating commands without making changes
 
@@ -43,12 +43,12 @@ Export and analyze your GPG keys.
 ghs analyze
 ```
 
-### Pair GPG and SSH Keys
+### Save GPG and SSH Key Configuration
 
-Pair your GPG and SSH keys for use with GitHub.
+Save a new GPG and SSH key pair configuration.
 
 ```bash
-ghs pair
+ghs save
 ```
 
 ### Clone Repository
@@ -61,7 +61,7 @@ ghs clone
 
 ### Switch GitHub Accounts
 
-Switch the GitHub account in a repository to use a different set of SSH and GPG keys.
+Switch the GitHub account using a saved configuration.
 
 ```bash
 ghs switch
@@ -103,7 +103,7 @@ ghs/
 
 - **bin/ghs.js**: Entry point for the CLI tool.
 - **lib/config.js**: Handles loading and saving configuration.
-- **lib/gpg.js**: Functions for exporting, analyzing, and pairing GPG keys.
+- **lib/gpg.js**: Functions for exporting, analyzing, saving, and setting default GPG keys.
 - **lib/ssh.js**: Functions for managing SSH keys.
 - **lib/git.js**: Functions for cloning repositories and switching accounts.
 - **lib/prompts.js**: User prompts for various operations.
@@ -114,4 +114,4 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details

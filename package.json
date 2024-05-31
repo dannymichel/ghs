@@ -1,23 +1,19 @@
 {
-  "name": "ghs",
-  "version": "1.0.0",
+  "name": "ghs-cli-tool",
+  "version": "1.0.2",
   "main": "bin/ghs.js",
   "bin": {
     "ghs": "./bin/ghs.js"
   },
+  "type": "commonjs",
   "dependencies": {
     "child_process": "^1.0.2",
     "fs": "^0.0.1-security",
-    "inquirer": "^8.2.0",
+    "inquirer": "^9.0.0",
     "openpgp": "^5.0.0",
     "os": "^0.1.1",
     "path": "^0.12.7",
-    "simple-git": "^2.47.0"
-  },
-  "scripts": {
-    "test": "jest", 
-    "lint": "eslint ."
-    "simple-git": "^3.0.0",
+    "simple-git": "^2.47.0",
     "yargs": "^17.4.0"
   }
 }
