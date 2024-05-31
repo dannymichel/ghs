@@ -1,5 +1,5 @@
 {
-  "name": "ghs-cli-tool",
+  "name": "ghs",
   "version": "1.0.0",
   "main": "bin/ghs.js",
   "bin": {
@@ -17,5 +17,7 @@
   "scripts": {
     "test": "jest", 
     "lint": "eslint ."
+    "simple-git": "^3.0.0",
+    "yargs": "^17.4.0"
   }
 }
