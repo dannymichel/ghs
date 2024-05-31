@@ -1,6 +1,6 @@
 # ghs - GitHub SSH and GPG Key Manager
 
-`ghs` is a command-line tool to manage SSH and GPG keys for GitHub accounts. It allows you to analyze, save configurations, and switch between them easily.
+`ghs` is a command-line tool to manage SSH and GPG keys for GitHub accounts. It allows you to analyze, save configurations, create new keys, delete configurations, and switch between them easily.
 
 ## Features
 
@@ -10,9 +10,12 @@
 - Clone repositories with specified SSH and GPG keys
 - Switch GitHub accounts using saved configurations
 - Set default GPG and SSH keys
+- Delete saved configurations
 - Dry-run mode for simulating commands without making changes
 
 ## Installation
+
+### From the Repository
 
 1. Clone the repository:
 
@@ -31,6 +34,20 @@
     ```bash
     npm install
     ```
+
+4. Link the package globally:
+
+    ```bash
+    npm link
+    ```
+
+### Global Installation via npm
+
+You can install the tool globally using npm:
+
+```bash
+npm install -g ghs-cli-tool
+```
 
 ## Usage
 
@@ -84,6 +101,14 @@ Set default GPG and SSH keys for your operations.
 ghs default
 ```
 
+### Delete Saved Configuration
+
+Delete a saved GPG and SSH key pair configuration.
+
+```bash
+ghs delete
+```
+
 ### Dry-Run Mode
 
 Simulate commands without making changes using the `--dry-run` option.
@@ -92,6 +117,9 @@ Simulate commands without making changes using the `--dry-run` option.
 ghs clone --dry-run
 ghs switch --dry-run
 ghs default --dry-run
+ghs new --dry-run
+ghs save --dry-run
+ghs delete --dry-run
 ```
 
 ## Directory Structure
@@ -112,7 +140,7 @@ ghs/
 
 - **bin/ghs.js**: Entry point for the CLI tool.
 - **lib/config.js**: Handles loading and saving configuration.
-- **lib/gpg.js**: Functions for exporting, analyzing, saving, and setting default GPG keys.
+- **lib/gpg.js**: Functions for exporting, analyzing, saving, creating, and setting default GPG keys.
 - **lib/ssh.js**: Functions for managing SSH keys.
 - **lib/git.js**: Functions for cloning repositories and switching accounts.
 - **lib/prompts.js**: User prompts for various operations.
