@@ -1,5 +1,5 @@
 {
-  "name": "ghs",
+  "name": "ghs-cli-tool",
   "version": "1.0.0",
   "main": "bin/ghs.js",
   "bin": {
@@ -8,16 +8,11 @@
   "dependencies": {
     "child_process": "^1.0.2",
     "fs": "^0.0.1-security",
-    "inquirer": "^9.0.0",
-    "openpgp": "^5.0.0",
-    "os": "^0.1.1",
+    "inquirer": "^9.2.22",
+    "openpgp": "^5.11.1",
+    "os": "^0.1.2",
     "path": "^0.12.7",
-    "simple-git": "^3.0.0"
-  },
-  "scripts": {
-    "test": "jest", 
-    "lint": "eslint ."
-    "simple-git": "^3.0.0",
-    "yargs": "^17.4.0"
+    "simple-git": "^3.24.0",
+    "yargs": "^17.7.2"
   }
 }

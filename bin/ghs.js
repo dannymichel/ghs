@@ -2,7 +2,7 @@
 
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
-const { exportAndAnalyzeGpgKeys, pairKeys, setDefaultKeys } = require('../lib/gpg');
+const { exportAndAnalyzeGpgKeys, saveKeys, setDefaultKeys } = require('../lib/gpg');
 const { cloneRepo, switchAccount } = require('../lib/git');
 const { promptClone, promptSwitch } = require('../lib/prompts');
 
@@ -15,16 +15,16 @@ const argv = yargs(hideBin(process.argv))
     .command('analyze', 'Export and analyze GPG keys', {}, async (args) => {
         await exportAndAnalyzeGpgKeys(args.dryRun);
     })
-    .command('pair', 'Pair GPG and SSH keys', {}, async (args) => {
-        await pairKeys(args.dryRun);
+    .command('save', 'Save a new GPG and SSH key pair configuration', {}, async (args) => {
+        await saveKeys(args.dryRun);
     })
     .command('clone', 'Clone a repository', {}, async (args) => {
         const cloneDetails = await promptClone();
         await cloneRepo(cloneDetails.url, cloneDetails.gpgKey, cloneDetails.sshKey, args.dryRun);
     })
-    .command('switch', 'Switch GitHub accounts in a repository', {}, async (args) => {
+    .command('switch', 'Switch GitHub accounts using saved configuration', {}, async (args) => {
         const switchDetails = await promptSwitch();
-        await switchAccount(switchDetails.repoPath, switchDetails.gpgKey, switchDetails.sshKey, args.dryRun);
+        await switchAccount(switchDetails.configName, args.dryRun);
     })
     .command('default', 'Set default GPG and SSH keys', {}, async (args) => {
         await setDefaultKeys(args.dryRun);
