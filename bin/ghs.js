@@ -2,7 +2,7 @@
 
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
-const { exportAndAnalyzeGpgKeys, saveKeys, setDefaultKeys, createNewKeys, deleteKeys } = require('../lib/gpg');
+const { exportAndAnalyzeGpgKeys, saveKeys, setDefaultKeys, createNewKeys, deleteKeys, listConfigs } = require('../lib/gpg');
 const { cloneRepo, switchAccount } = require('../lib/git');
 const { promptClone, promptSwitch } = require('../lib/prompts');
 
@@ -21,9 +21,6 @@ const argv = yargs(hideBin(process.argv))
     .command('new', 'Create a new GPG and SSH key pair', {}, async (args) => {
         await createNewKeys(args.dryRun);
     })
-    .command('delete', 'Delete a saved GPG and SSH key pair configuration', {}, async (args) => {
-        await deleteKeys(args.dryRun);
-    })
     .command('clone', 'Clone a repository', {}, async (args) => {
         const cloneDetails = await promptClone();
         await cloneRepo(cloneDetails.url, cloneDetails.gpgKey, cloneDetails.sshKey, args.dryRun);
@@ -34,6 +31,18 @@ const argv = yargs(hideBin(process.argv))
     })
     .command('default', 'Set default GPG and SSH keys', {}, async (args) => {
         await setDefaultKeys(args.dryRun);
+    })
+    .command('delete', 'Delete a saved GPG and SSH key pair configuration', {
+        hard: {
+            type: 'boolean',
+            description: 'Delete both the configuration and the actual keys',
+            default: false,
+        }
+    }, async (args) => {
+        await deleteKeys(args.dryRun, args.hard);
+    })
+    .command('list', 'List all saved configurations', {}, async () => {
+        await listConfigs();
     })
     .demandCommand(1, 'You need at least one command before moving on')
     .help()

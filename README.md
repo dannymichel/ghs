@@ -11,6 +11,7 @@
 - Switch GitHub accounts using saved configurations
 - Set default GPG and SSH keys
 - Delete saved configurations
+- List all saved configurations
 - Dry-run mode for simulating commands without making changes
 
 ## Installation
@@ -103,10 +104,19 @@ ghs default
 
 ### Delete Saved Configuration
 
-Delete a saved GPG and SSH key pair configuration.
+Delete a saved GPG and SSH key pair configuration. Use the `--hard` option to delete both the configuration and the actual keys.
 
 ```bash
 ghs delete
+ghs delete --hard
+```
+
+### List All Saved Configurations
+
+List all saved configurations.
+
+```bash
+ghs list
 ```
 
 ### Dry-Run Mode
@@ -140,14 +150,16 @@ ghs/
 
 - **bin/ghs.js**: Entry point for the CLI tool.
 - **lib/config.js**: Handles loading and saving configuration.
-- **lib/gpg.js**: Functions for exporting, analyzing, saving, creating, and setting default GPG keys.
+- **lib/gpg.js**: Functions for exporting, analyzing, saving, creating, setting default, and deleting GPG keys.
 - **lib/ssh.js**: Functions for managing SSH keys.
 - **lib/git.js**: Functions for cloning repositories and switching accounts.
 - **lib/prompts.js**: User prompts for various operations.
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+Contributions are welcome! Please open an issue or submit a pull request for any
+
+ improvements or bug fixes.
 
 ## License
 
