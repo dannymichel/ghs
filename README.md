@@ -6,6 +6,7 @@
 
 - Export and analyze GPG keys
 - Save and name GPG and SSH key configurations
+- Create new GPG and SSH key pairs
 - Clone repositories with specified SSH and GPG keys
 - Switch GitHub accounts using saved configurations
 - Set default GPG and SSH keys
@@ -49,6 +50,14 @@ Save a new GPG and SSH key pair configuration.
 
 ```bash
 ghs save
+```
+
+### Create New GPG and SSH Key Pair
+
+Create a new GPG and SSH key pair.
+
+```bash
+ghs new
 ```
 
 ### Clone Repository
@@ -114,4 +123,4 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
