@@ -2,7 +2,7 @@
 
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
-const { exportAndAnalyzeGpgKeys, saveKeys, setDefaultKeys, createNewKeys, deleteKeys, listConfigs } = require('../lib/gpg');
+const { exportAndAnalyzeGpgKeys, saveKeys, setDefaultKeys, createNewKeys, deleteKeys, listConfigs, exportKeys } = require('../lib/gpg');
 const { cloneRepo, switchAccount } = require('../lib/git');
 const { promptClone, promptSwitch } = require('../lib/prompts');
 
@@ -43,6 +43,9 @@ const argv = yargs(hideBin(process.argv))
     })
     .command('list', 'List all saved configurations', {}, async () => {
         await listConfigs();
+    })
+    .command('export', 'Export GPG and SSH keys for a saved configuration', {}, async () => {
+        await exportKeys();
     })
     .demandCommand(1, 'You need at least one command before moving on')
     .help()
