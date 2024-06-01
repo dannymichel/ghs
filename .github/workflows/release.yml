@@ -25,6 +25,13 @@ jobs:
       id: extract_tag
       run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
+    - name: Check GitHub CLI version
+      run: gh --version
+
+    - name: Install GitHub CLI if not available
+      if: failure()
+      run: sudo apt-get install gh
+
     - name: Delete existing release (if any)
       run: |
         existing_release_id=$(gh release view ${{ env.TAG_NAME }} --json id --jq '.id' || echo "not_found")
