@@ -1,6 +1,6 @@
 {
   "name": "ghs-cli-tool",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "main": "bin/ghs.js",
   "bin": {
     "ghs": "./bin/ghs.js"
