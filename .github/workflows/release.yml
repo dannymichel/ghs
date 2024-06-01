@@ -11,12 +11,12 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '16.x'
+        node-version: '20.x'
 
     - name: Install dependencies
       run: npm install
@@ -24,6 +24,17 @@ jobs:
     - name: Extract tag name
       id: extract_tag
       run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+    - name: Delete existing release (if any)
+      run: |
+        existing_release_id=$(gh release view ${{ env.TAG_NAME }} --json id --jq '.id' || echo "not_found")
+        if [ "$existing_release_id" != "not_found" ]; then
+          gh release delete ${{ env.TAG_NAME }} --yes
+          git tag -d ${{ env.TAG_NAME }}
+          git push --delete origin ${{ env.TAG_NAME }}
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create GitHub Release
       id: create_release
