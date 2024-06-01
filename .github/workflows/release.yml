@@ -11,15 +11,37 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: '16.x'
+        node-version: '20.x'
 
     - name: Install dependencies
       run: npm install
+
+    - name: Extract tag name
+      id: extract_tag
+      run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+
+    - name: Check GitHub CLI version
+      run: gh --version
+
+    - name: Install GitHub CLI if not available
+      if: failure()
+      run: sudo apt-get install gh
+
+    - name: Delete existing release (if any)
+      run: |
+        existing_release_id=$(gh release view ${{ env.TAG_NAME }} --json id --jq '.id' || echo "not_found")
+        if [ "$existing_release_id" != "not_found" ]; then
+          gh release delete ${{ env.TAG_NAME }} --yes
+          git tag -d ${{ env.TAG_NAME }}
+          git push --delete origin ${{ env.TAG_NAME }}
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create GitHub Release
       id: create_release
@@ -27,8 +49,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
+        tag_name: ${{ env.TAG_NAME }}
+        release_name: ${{ env.TAG_NAME }}
         body: |
           ## Changes in this release
           - Description of changes...
@@ -36,6 +58,8 @@ jobs:
         prerelease: false
 
     - name: Publish to npm
-      run: npm publish
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: |
+        echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+        npm publish
