@@ -64,7 +64,13 @@ ghs analyze
 
 ### Save GPG and SSH Key Configuration
 
-Save a new GPG and SSH key pair configuration.
+Save a new GPG and SSH key pair configuration. You can either pass the configuration name, GPG key, and SSH key directly as arguments, or run the command without arguments to select from options interactively.
+
+```bash
+ghs save [configName] [gpgKey] [sshKey]
+```
+
+or
 
 ```bash
 ghs save
@@ -72,7 +78,13 @@ ghs save
 
 ### Create New GPG and SSH Key Pair
 
-Create a new GPG and SSH key pair.
+Create a new GPG and SSH key pair. You can either pass the necessary details directly as arguments, or run the command without arguments to provide details interactively.
+
+```bash
+ghs new [configName] [gpgName] [gpgEmail] [gpgPassphrase] [sshKeyName]
+```
+
+or
 
 ```bash
 ghs new
@@ -80,7 +92,13 @@ ghs new
 
 ### Clone Repository
 
-Clone a GitHub repository using specified SSH and GPG keys.
+Clone a GitHub repository using specified SSH and GPG keys. You can either pass the URL, GPG key, and SSH key directly as arguments, or run the command without arguments to select from options interactively.
+
+```bash
+ghs clone [url] [gpgKey] [sshKey]
+```
+
+or
 
 ```bash
 ghs clone
@@ -88,7 +106,13 @@ ghs clone
 
 ### Switch GitHub Accounts
 
-Switch the GitHub account using a saved configuration.
+Switch the GitHub account using a saved configuration. You can either pass the configuration name directly as an argument, or run the command without arguments to select from options interactively.
+
+```bash
+ghs switch [configName]
+```
+
+or
 
 ```bash
 ghs switch
@@ -96,7 +120,13 @@ ghs switch
 
 ### Set Default Keys
 
-Set default GPG and SSH keys for your operations.
+Set default GPG and SSH keys for your operations. You can either pass the GPG key, SSH key, user name, and user email directly as arguments, or run the command without arguments to provide details interactively.
+
+```bash
+ghs default [gpgKey] [sshKey] [userName] [userEmail]
+```
+
+or
 
 ```bash
 ghs default
@@ -104,7 +134,14 @@ ghs default
 
 ### Delete Saved Configuration
 
-Delete a saved GPG and SSH key pair configuration. Use the `--hard` option to delete both the configuration and the actual keys.
+Delete a saved GPG and SSH key pair configuration. Use the `--hard` option to delete both the configuration and the actual keys. You can either pass the configuration name directly as an argument, or run the command without arguments to select from options interactively.
+
+```bash
+ghs delete [configName]
+ghs delete --hard [configName]
+```
+
+or
 
 ```bash
 ghs delete
@@ -119,17 +156,32 @@ List all saved configurations.
 ghs list
 ```
 
+### Export GPG and SSH Keys
+
+Export GPG and SSH keys for a saved configuration. You can either pass the configuration name directly as an argument, or run the command without arguments to select from options interactively.
+
+```bash
+ghs export [configName]
+```
+
+or
+
+```bash
+ghs export
+```
+
 ### Dry-Run Mode
 
 Simulate commands without making changes using the `--dry-run` option.
 
 ```bash
-ghs clone --dry-run
-ghs switch --dry-run
-ghs default --dry-run
-ghs new --dry-run
-ghs save --dry-run
-ghs delete --dry-run
+ghs clone --dry-run [url] [gpgKey] [sshKey]
+ghs switch --dry-run [configName]
+ghs default --dry-run [gpgKey] [sshKey] [userName] [userEmail]
+ghs new --dry-run [configName] [gpgName] [gpgEmail] [gpgPassphrase] [sshKeyName]
+ghs save --dry-run [configName] [gpgKey] [sshKey]
+ghs delete --dry-run [configName]
+ghs delete --hard --dry-run [configName]
 ```
 
 ## Directory Structure
@@ -157,9 +209,7 @@ ghs/
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request for any
-
- improvements or bug fixes.
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
 
 ## License
 
