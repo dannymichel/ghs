@@ -2,7 +2,15 @@
 
 const yargs = require('yargs/yargs');
 const { hideBin } = require('yargs/helpers');
-const { exportAndAnalyzeGpgKeys, saveKeys, setDefaultKeys, createNewKeys, deleteKeys, listConfigs, exportKeys } = require('../lib/gpg');
+const {
+    exportAndAnalyzeGpgKeys,
+    saveKeys,
+    setDefaultKeys,
+    createNewKeys,
+    deleteKeys,
+    listConfigs,
+    exportKeys
+} = require('../lib/gpg');
 const { cloneRepo, switchAccount } = require('../lib/git');
 const { promptClone, promptSwitch } = require('../lib/prompts');
 
@@ -15,20 +23,30 @@ const argv = yargs(hideBin(process.argv))
     .command('analyze', 'Export and analyze GPG keys', {}, async (args) => {
         await exportAndAnalyzeGpgKeys(args.dryRun);
     })
-    .command('save [configName] [gpgKey] [sshKey]', 'Save a new GPG and SSH key pair configuration', {}, async (args) => {
-        await saveKeys(args.dryRun, args.configName, args.gpgKey, args.sshKey);
+    .command('save', 'Save a new GPG and SSH key pair configuration', {}, async (args) => {
+        await saveKeys(args.dryRun);
     })
-    .command('new [configName] [gpgName] [gpgEmail] [gpgPassphrase] [sshKeyName]', 'Create a new GPG and SSH key pair', {}, async (args) => {
-        await createNewKeys(args.dryRun, args.configName, args.gpgName, args.gpgEmail, args.gpgPassphrase, args.sshKeyName);
+    .command('new', 'Create a new GPG and SSH key pair', {}, async (args) => {
+        await createNewKeys(args.dryRun);
     })
     .command('clone [url] [gpgKey] [sshKey]', 'Clone a repository', {}, async (args) => {
+        if (!args.url || !args.gpgKey || !args.sshKey) {
+            const cloneDetails = await promptClone();
+            args.url = args.url || cloneDetails.url;
+            args.gpgKey = args.gpgKey || cloneDetails.gpgKey;
+            args.sshKey = args.sshKey || cloneDetails.sshKey;
+        }
         await cloneRepo(args.url, args.gpgKey, args.sshKey, args.dryRun);
     })
     .command('switch [configName]', 'Switch GitHub accounts using saved configuration', {}, async (args) => {
+        if (!args.configName) {
+            const switchDetails = await promptSwitch();
+            args.configName = args.configName || switchDetails.configName;
+        }
         await switchAccount(args.configName, args.dryRun);
     })
-    .command('default [gpgKey] [sshKey] [userName] [userEmail]', 'Set default GPG and SSH keys', {}, async (args) => {
-        await setDefaultKeys(args.dryRun, args.gpgKey, args.sshKey, args.userName, args.userEmail);
+    .command('default', 'Set default GPG and SSH keys', {}, async (args) => {
+        await setDefaultKeys(args.dryRun);
     })
     .command('delete [configName]', 'Delete a saved GPG and SSH key pair configuration', {
         hard: {
