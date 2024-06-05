@@ -31,10 +31,15 @@
     cd ghs
     ```
 
-3. Install the dependencies:
+3. Install the dependencies for the backend and frontend:
 
     ```bash
     npm install
+    cd frontend
+    npm install
+    cd ../backend
+    npm install
+    cd ..
     ```
 
 4. Link the package globally:
