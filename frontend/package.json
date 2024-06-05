@@ -1,15 +1,29 @@
 {
-  "name": "ghs-frontend",
-  "version": "1.0.0",
+  "name": "ghs-cli-tool",
+  "version": "1.1.0",
   "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "node backend/index.js",
+    "start:frontend": "cd frontend && cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
+  },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.19",
+    "@mui/material": "^5.15.19",
     "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "^4.0.3"
   },
-  "scripts": {
-    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start"
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   },
   "browserslist": {
     "production": [

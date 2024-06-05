@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Container from '@mui/material/Container';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+import './index.css';
 
 const App = () => {
     const [configs, setConfigs] = useState([]);
-    const [newConfigName, setNewConfigName] = useState('');
-    const [newGpgKey, setNewGpgKey] = useState('');
-    const [newSshKey, setNewSshKey] = useState('');
-    const [selectedConfig, setSelectedConfig] = useState('');
-    const [message, setMessage] = useState('');
+    const [newConfig, setNewConfig] = useState('');
 
     useEffect(() => {
         fetchConfigs();
@@ -24,15 +30,9 @@ const App = () => {
 
     const addConfig = async () => {
         try {
-            const response = await axios.post('http://localhost:9000/configs', {
-                name: newConfigName,
-                gpgKey: newGpgKey,
-                sshKey: newSshKey
-            });
+            const response = await axios.post('http://localhost:9000/configs', { name: newConfig });
             setConfigs([...configs, response.data]);
-            setNewConfigName('');
-            setNewGpgKey('');
-            setNewSshKey('');
+            setNewConfig('');
         } catch (error) {
             console.error('Error adding configuration:', error);
         }
@@ -47,103 +47,38 @@ const App = () => {
         }
     };
 
-    const switchConfig = async () => {
-        try {
-            const response = await axios.post('http://localhost:9000/switch', { configName: selectedConfig });
-            setMessage(response.data.message);
-        } catch (error) {
-            console.error('Error switching configuration:', error);
-        }
-    };
-
-    const analyzeGpgKeys = async () => {
-        try {
-            const response = await axios.get('http://localhost:9000/analyze');
-            setMessage(response.data.message);
-        } catch (error) {
-            console.error('Error analyzing GPG keys:', error);
-        }
-    };
-
-    const setDefaultKeys = async () => {
-        try {
-            const response = await axios.post('http://localhost:9000/default', { gpgKey: newGpgKey, sshKey: newSshKey });
-            setMessage(response.data.message);
-        } catch (error) {
-            console.error('Error setting default keys:', error);
-        }
-    };
-
     return (
-        <div>
+        <Container maxWidth="sm">
             <h1>Configurations</h1>
-            <div>
-                <h2>Add New Config</h2>
-                <input
-                    type="text"
-                    value={newConfigName}
-                    onChange={(e) => setNewConfigName(e.target.value)}
-                    placeholder="New config name"
-                />
-                <input
-                    type="text"
-                    value={newGpgKey}
-                    onChange={(e) => setNewGpgKey(e.target.value)}
-                    placeholder="New GPG key"
-                />
-                <input
-                    type="text"
-                    value={newSshKey}
-                    onChange={(e) => setNewSshKey(e.target.value)}
-                    placeholder="New SSH key"
-                />
-                <button onClick={addConfig}>Add Config</button>
-            </div>
-            <div>
-                <h2>Saved Configurations</h2>
-                <ul>
-                    {configs.map((config, index) => (
-                        <li key={index}>
-                            {config.name} - GPG Key: {config.gpgKey}, SSH Key: {config.sshKey}
-                            <button onClick={() => deleteConfig(config.name)}>Delete</button>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div>
-                <h2>Switch Configuration</h2>
-                <select onChange={(e) => setSelectedConfig(e.target.value)}>
-                    <option value="">Select Config</option>
-                    {configs.map((config, index) => (
-                        <option key={index} value={config.name}>
-                            {config.name}
-                        </option>
-                    ))}
-                </select>
-                <button onClick={switchConfig}>Switch Config</button>
-            </div>
-            <div>
-                <h2>Analyze GPG Keys</h2>
-                <button onClick={analyzeGpgKeys}>Analyze</button>
-            </div>
-            <div>
-                <h2>Set Default Keys</h2>
-                <input
-                    type="text"
-                    value={newGpgKey}
-                    onChange={(e) => setNewGpgKey(e.target.value)}
-                    placeholder="GPG key"
-                />
-                <input
-                    type="text"
-                    value={newSshKey}
-                    onChange={(e) => setNewSshKey(e.target.value)}
-                    placeholder="SSH key"
-                />
-                <button onClick={setDefaultKeys}>Set Default Keys</button>
-            </div>
-            {message && <div><h3>Message</h3><p>{message}</p></div>}
-        </div>
+            <TextField
+                fullWidth
+                variant="outlined"
+                margin="normal"
+                value={newConfig}
+                onChange={(e) => setNewConfig(e.target.value)}
+                placeholder="New config name"
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={addConfig}
+                disabled={!newConfig}
+            >
+                Add Config
+            </Button>
+            <List>
+                {configs.map((config, index) => (
+                    <ListItem key={index} divider>
+                        <ListItemText primary={config.name} />
+                        <ListItemSecondaryAction>
+                            <IconButton edge="end" aria-label="delete" onClick={() => deleteConfig(config.name)}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                ))}
+            </List>
+        </Container>
     );
 };
 
