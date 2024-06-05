@@ -9,7 +9,6 @@ updates:
     rebase-strategy: "auto"
     commit-message:
       prefix: "chore(deps)"
-    pull-request-branch-name: "dependabot/npm-<dependency-name>"
     target-branch: "main"
     # Only open a pull request when there is a security update
     ignore:
