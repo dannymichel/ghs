@@ -1,6 +1,6 @@
 # ghs - GitHub SSH and GPG Key Manager
 
-`ghs` is a command-line tool to manage SSH and GPG keys for GitHub accounts. It allows you to analyze, save configurations, create new keys, delete configurations, and switch between them easily.
+`ghs` is a command-line tool and GUI to manage SSH and GPG keys for GitHub accounts. It allows you to analyze, save configurations, create new keys, delete configurations, and switch between them easily.
 
 ## Features
 
@@ -13,6 +13,7 @@
 - Delete saved configurations
 - List all saved configurations
 - Dry-run mode for simulating commands without making changes
+- Modern GUI with dark and light modes
 
 ## Installation
 
@@ -184,6 +185,16 @@ ghs delete --dry-run [configName]
 ghs delete --hard --dry-run [configName]
 ```
 
+### Running the GUI
+
+To run the GUI for managing your configurations, use the following command:
+
+```bash
+npm start
+```
+
+This will start both the frontend and backend servers. You can then access the GUI in your browser at `http://localhost:3000`.
+
 ## Directory Structure
 
 ```
@@ -191,6 +202,17 @@ ghs/
 │
 ├── bin/
 │   └── ghs.js
+├── backend/
+│   ├── index.js
+│   └── ...
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── App.js
+│   │   ├── index.js
+│   │   ├── themes.js
+│   │   ├── ...
+│   └── package.json
 ├── lib/
 │   ├── config.js
 │   ├── gpg.js
@@ -201,6 +223,13 @@ ghs/
 ```
 
 - **bin/ghs.js**: Entry point for the CLI tool.
+- **backend/index.js**: Entry point for the backend server.
+- **frontend/**: Contains the frontend React application.
+  - **public/**: Static assets for the frontend.
+  - **src/**: Source code for the frontend.
+    - **App.js**: Main application component.
+    - **index.js**: Entry point for the React application.
+    - **themes.js**: Contains theme configurations for light and dark modes.
 - **lib/config.js**: Handles loading and saving configuration.
 - **lib/gpg.js**: Functions for exporting, analyzing, saving, creating, setting default, and deleting GPG keys.
 - **lib/ssh.js**: Functions for managing SSH keys.
