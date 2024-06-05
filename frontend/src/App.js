@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Container, Typography, Button, TextField, MenuItem, Select, FormControl, InputLabel, Grid, Box, Paper } from '@mui/material';
+import { Container, Typography, Button, TextField, MenuItem, Select, FormControl, InputLabel, Grid, Box, Paper, IconButton } from '@mui/material';
+import NightlightRoundIcon from '@mui/icons-material/NightlightRound';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 
-const App = () => {
+const App = ({ darkMode, setDarkMode }) => {
     const [configs, setConfigs] = useState([]);
     const [newConfig, setNewConfig] = useState('');
     const [command, setCommand] = useState('');
@@ -78,9 +80,18 @@ const App = () => {
 
     return (
         <Container>
-            <Typography variant="h4" gutterBottom>GitHub SSH and GPG Key Manager</Typography>
-
             <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Box display="flex" justifyContent="space-between" alignItems="center">
+                        <Typography variant="h4" gutterBottom>GitHub SSH and GPG Key Manager</Typography>
+                        <IconButton
+                            onClick={() => setDarkMode(!darkMode)}
+                            color="inherit"
+                        >
+                            {darkMode ? <WbSunnyIcon /> : <NightlightRoundIcon />}
+                        </IconButton>
+                    </Box>
+                </Grid>
                 <Grid item xs={12}>
                     <Paper elevation={3} style={{ padding: '16px' }}>
                         <Typography variant="h6">Add New Configuration</Typography>

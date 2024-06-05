@@ -1,18 +1,23 @@
 import React, { useState, useMemo } from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import App from './App';
 import './index.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { IconButton } from '@mui/material';
-import NightlightRoundIcon from '@mui/icons-material/NightlightRound';
-import WbSunnyIcon from '@mui/icons-material/WbSunny';
 
 const Index = () => {
     const [darkMode, setDarkMode] = useState(true);
 
     const theme = useMemo(() =>
         createTheme({
+            typography: {
+                fontFamily: '-apple-system, BlinkMacSystemFont, \'Segoe UI\', \'Roboto\', \'Oxygen\', \'Ubuntu\', \'Cantarell\', \'Fira Sans\', \'Droid Sans\', \'Helvetica Neue\', sans-serif',
+                fontSize: 12,
+                button: {
+                    textTransform: 'none',
+                    fontSize: '12px',
+                },
+            },
             palette: {
                 mode: darkMode ? 'dark' : 'light',
                 primary: {
@@ -21,22 +26,35 @@ const Index = () => {
                 secondary: {
                     main: '#dc004e',
                 },
+                background: {
+                    default: darkMode ? '#121212' : '#ffffff',
+                },
+                text: {
+                    primary: darkMode ? '#ffffff' : '#000000',
+                },
+            },
+            components: {
+                MuiCssBaseline: {
+                    styleOverrides: {
+                        body: {
+                            backgroundColor: darkMode ? '#121212' : '#ffffff',
+                            color: darkMode ? '#ffffff' : '#000000',
+                            WebkitFontSmoothing: 'antialiased',
+                            MozOsxFontSmoothing: 'grayscale',
+                        },
+                    },
+                },
             },
         }), [darkMode]);
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <IconButton
-                style={{ position: 'absolute', right: 16, top: 16 }}
-                onClick={() => setDarkMode(!darkMode)}
-                color="inherit"
-            >
-                {darkMode ? <WbSunnyIcon /> : <NightlightRoundIcon />}
-            </IconButton>
-            <App />
+            <App darkMode={darkMode} setDarkMode={setDarkMode} />
         </ThemeProvider>
     );
 };
 
-ReactDOM.render(<Index />, document.getElementById('root'));
+const container = document.getElementById('root');
+const root = ReactDOM.createRoot(container);
+root.render(<Index />);
