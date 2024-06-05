@@ -19,7 +19,7 @@ jobs:
         node-version: '20.x'
 
     - name: Install dependencies
-      run: npm install
+      run: npm install && cd frontend && npm install && cd ../backend && npm install
 
     - name: Extract tag name
       id: extract_tag

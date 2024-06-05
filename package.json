@@ -1,7 +1,6 @@
 {
   "name": "ghs-cli-tool",
   "version": "1.1.0",
-  "private": true,
   "scripts": {
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:backend": "cd backend && node index.js",

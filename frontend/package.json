@@ -1,7 +1,6 @@
 {
   "name": "ghs-frontend",
   "version": "1.0.0",
-  "private": true,
   "scripts": {
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:backend": "node backend/index.js",
