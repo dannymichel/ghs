@@ -5,8 +5,8 @@ import './index.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { IconButton } from '@mui/material';
-import Brightness4Icon from '@mui/icons-material/Brightness4';
-import Brightness7Icon from '@mui/icons-material/Brightness7';
+import NightlightRoundIcon from '@mui/icons-material/NightlightRound';
+import WbSunnyIcon from '@mui/icons-material/WbSunny';
 
 const Index = () => {
     const [darkMode, setDarkMode] = useState(true);
@@ -32,7 +32,7 @@ const Index = () => {
                 onClick={() => setDarkMode(!darkMode)}
                 color="inherit"
             >
-                {darkMode ? <Brightness7Icon /> : <Brightness4Icon />}
+                {darkMode ? <WbSunnyIcon /> : <NightlightRoundIcon />}
             </IconButton>
             <App />
         </ThemeProvider>
