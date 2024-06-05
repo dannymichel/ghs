@@ -14,4 +14,3 @@ function saveConfig(config) {
 }
 
 module.exports = { loadConfig, saveConfig };
-
