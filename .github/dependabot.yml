@@ -15,10 +15,3 @@ updates:
     ignore:
       - dependency-name: "*"
         update-types: ["version-update:semver-minor", "version-update:semver-patch"]
-
-# Notification settings (optional)
-notifications:
-  - type: "email"
-    schedule: "daily"
-    recipients:
-      - "dan@varmag.com"
