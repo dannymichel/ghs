@@ -1,19 +1,30 @@
 {
   "name": "ghs-cli-tool",
-  "version": "1.0.10",
-  "main": "bin/ghs.js",
-  "bin": {
-    "ghs": "./bin/ghs.js"
+  "version": "1.1.0",
+  "private": true,
+  "scripts": {
+    "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+    "start:backend": "cd backend && node index.js",
+    "start:frontend": "cd frontend && cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install"
   },
-  "type": "commonjs",
   "dependencies": {
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "^4.0.3",
+    "cross-env": "^7.0.3",
+    "yargs": "^17.7.2",
     "child_process": "^1.0.2",
     "fs": "^0.0.1-security",
     "inquirer": "^9.2.23",
     "openpgp": "^5.11.1",
     "os": "^0.1.2",
     "path": "^0.12.7",
-    "simple-git": "^3.24.0",
-    "yargs": "^17.7.2"
+    "simple-git": "^3.24.0"
   }
 }
