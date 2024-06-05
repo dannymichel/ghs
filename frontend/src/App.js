@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Container from '@mui/material/Container';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemSecondaryAction from '@mui/material/ListItemSecondaryAction';
-import IconButton from '@mui/material/IconButton';
-import DeleteIcon from '@mui/icons-material/Delete';
-import './index.css';
+import { Container, Typography, Button, TextField, MenuItem, Select, FormControl, InputLabel, Grid, Box, Paper } from '@mui/material';
 
 const App = () => {
     const [configs, setConfigs] = useState([]);
     const [newConfig, setNewConfig] = useState('');
+    const [command, setCommand] = useState('');
+    const [response, setResponse] = useState('');
+    const [selectedConfig, setSelectedConfig] = useState('');
+    const [repositoryUrl, setRepositoryUrl] = useState('');
+    const [gpgKey, setGpgKey] = useState('');
+    const [sshKey, setSshKey] = useState('');
 
     useEffect(() => {
         fetchConfigs();
@@ -47,37 +44,136 @@ const App = () => {
         }
     };
 
+    const executeCommand = async () => {
+        try {
+            let url = `http://localhost:9000/${command}`;
+            let data = {};
+            if (command === 'clone') {
+                data = { name: selectedConfig, url: repositoryUrl };
+            } else if (command === 'save') {
+                data = { name: selectedConfig, gpgKey, sshKey };
+            } else {
+                data = { name: selectedConfig };
+            }
+
+            const response = await axios.post(url, data);
+            setResponse(response.data);
+        } catch (error) {
+            console.error('Error executing command:', error);
+            setResponse(`Error executing command: ${error.message}`);
+        }
+    };
+
     return (
-        <Container maxWidth="sm">
-            <h1>Configurations</h1>
-            <TextField
-                fullWidth
-                variant="outlined"
-                margin="normal"
-                value={newConfig}
-                onChange={(e) => setNewConfig(e.target.value)}
-                placeholder="New config name"
-            />
-            <Button
-                variant="contained"
-                color="primary"
-                onClick={addConfig}
-                disabled={!newConfig}
-            >
-                Add Config
-            </Button>
-            <List>
-                {configs.map((config, index) => (
-                    <ListItem key={index} divider>
-                        <ListItemText primary={config.name} />
-                        <ListItemSecondaryAction>
-                            <IconButton edge="end" aria-label="delete" onClick={() => deleteConfig(config.name)}>
-                                <DeleteIcon />
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                ))}
-            </List>
+        <Container>
+            <Typography variant="h4" gutterBottom>GitHub SSH and GPG Key Manager</Typography>
+
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <Paper elevation={3} style={{ padding: '16px' }}>
+                        <Typography variant="h6">Add New Configuration</Typography>
+                        <TextField
+                            label="New Config Name"
+                            value={newConfig}
+                            onChange={(e) => setNewConfig(e.target.value)}
+                            fullWidth
+                            margin="normal"
+                        />
+                        <Button variant="contained" color="primary" onClick={addConfig}>Add Config</Button>
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Paper elevation={3} style={{ padding: '16px' }}>
+                        <Typography variant="h6">Execute Command</Typography>
+                        <FormControl fullWidth margin="normal">
+                            <InputLabel>Command</InputLabel>
+                            <Select
+                                value={command}
+                                onChange={(e) => setCommand(e.target.value)}
+                                fullWidth
+                            >
+                                <MenuItem value="configs">List Configs</MenuItem>
+                                <MenuItem value="clone">Clone</MenuItem>
+                                <MenuItem value="switch">Switch</MenuItem>
+                                <MenuItem value="delete">Delete</MenuItem>
+                                <MenuItem value="export">Export</MenuItem>
+                                <MenuItem value="analyze">Analyze</MenuItem>
+                                <MenuItem value="new">New</MenuItem>
+                                <MenuItem value="save">Save</MenuItem>
+                                <MenuItem value="default">Default</MenuItem>
+                            </Select>
+                        </FormControl>
+
+                        {(command === 'clone' || command === 'save') && (
+                            <Box>
+                                <FormControl fullWidth margin="normal">
+                                    <InputLabel>Configuration</InputLabel>
+                                    <Select
+                                        value={selectedConfig}
+                                        onChange={(e) => setSelectedConfig(e.target.value)}
+                                        fullWidth
+                                    >
+                                        {configs.map(config => (
+                                            <MenuItem key={config.name} value={config.name}>{config.name}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                                {command === 'clone' && (
+                                    <TextField
+                                        label="Repository URL"
+                                        value={repositoryUrl}
+                                        onChange={(e) => setRepositoryUrl(e.target.value)}
+                                        fullWidth
+                                        margin="normal"
+                                    />
+                                )}
+                                {command === 'save' && (
+                                    <Box>
+                                        <TextField
+                                            label="GPG Key"
+                                            value={gpgKey}
+                                            onChange={(e) => setGpgKey(e.target.value)}
+                                            fullWidth
+                                            margin="normal"
+                                        />
+                                        <TextField
+                                            label="SSH Key"
+                                            value={sshKey}
+                                            onChange={(e) => setSshKey(e.target.value)}
+                                            fullWidth
+                                            margin="normal"
+                                        />
+                                    </Box>
+                                )}
+                            </Box>
+                        )}
+
+                        <Button variant="contained" color="primary" onClick={executeCommand}>Execute</Button>
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Paper elevation={3} style={{ padding: '16px' }}>
+                        <Typography variant="h6">Response</Typography>
+                        <pre>{response}</pre>
+                    </Paper>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Paper elevation={3} style={{ padding: '16px' }}>
+                        <Typography variant="h6">Saved Configurations</Typography>
+                        <ul>
+                            {configs.map((config, index) => (
+                                <li key={index}>
+                                    {config.name}
+                                    <Button variant="contained" color="secondary" onClick={() => deleteConfig(config.name)}>Delete</Button>
+                                </li>
+                            ))}
+                        </ul>
+                    </Paper>
+                </Grid>
+            </Grid>
         </Container>
     );
 };
