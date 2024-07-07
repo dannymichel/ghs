@@ -20,7 +20,7 @@
     "cross-env": "^7.0.3",
     "express": "^4.19.2",
     "fs": "^0.0.1-security",
-    "inquirer": "^9.2.23",
+    "inquirer": "^10.0.0",
     "openpgp": "^5.11.1",
     "os": "^0.1.2",
     "path": "^0.12.7",
