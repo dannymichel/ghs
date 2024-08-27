@@ -10,8 +10,8 @@
   "dependencies": {
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
-    "@mui/icons-material": "^5.15.19",
-    "@mui/material": "^5.15.19",
+    "@mui/icons-material": "^6.0.0",
+    "@mui/material": "^6.0.0",
     "axios": "^1.7.2",
     "body-parser": "^1.20.2",
     "child_process": "^1.0.2",
