@@ -15,7 +15,7 @@
     "axios": "^1.7.2",
     "body-parser": "^1.20.2",
     "child_process": "^1.0.2",
-    "concurrently": "^8.2.2",
+    "concurrently": "^9.0.0",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "express": "^4.19.2",
